@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<module external.linked.project.id="project [file:/D:/cours5emeannee/projet/funprog-al/project/]" external.linked.project.path="$MODULE_DIR$/../.." external.root.project.path="$MODULE_DIR$/../.." external.system.id="SBT" type="JAVA_MODULE" version="4">
+  <component name="NewModuleRootManager" LANGUAGE_LEVEL="JDK_15">
+    <output url="file://$MODULE_DIR$/../../target/scala-2.12/classes" />
+    <output-test url="file://$MODULE_DIR$/../../target/scala-2.12/test-classes" />
+    <exclude-output />
+    <content url="file://$MODULE_DIR$/../..">
+      <excludeFolder url="file://$MODULE_DIR$/../../target" />
+    </content>
+    <orderEntry type="inheritedJdk" />
+    <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="sbt: com.typesafe:config:1.4.0:jar" level="project" />
+    <orderEntry type="library" name="sbt: io.get-coursier:interface:0.0.17:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scala-lang:scala-library:2.12.13:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalameta:sbt-scalafmt:2.3.2:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalameta:scalafmt-dynamic_2.12:2.4.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.scalameta:scalafmt-interfaces:2.4.1:jar" level="project" />
+    <orderEntry type="library" name="sbt: org.wartremover:sbt-wartremover:2.4.13:jar" level="project" />
+  </component>
+</module>
