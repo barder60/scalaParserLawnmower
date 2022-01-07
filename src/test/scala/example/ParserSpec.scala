@@ -6,16 +6,6 @@ import progfun.{Board, Parser}
 
 class ParserSpec extends AnyFunSuite {
 
-  //parse boardd oit vérifier
-  //2 paramètres
-  //qu'ils sont bien int
-  //
-
-  //  test("parse string should call parse board") {
-  //    val parser = new Parser("5,5;1,2,E;DDD;1,3,S;GAGAGA;")
-  //    parser.parseString()
-  //  }
-
   test(
     "parse board should throw incorrect parameter exception when not 2 digits"
   ) {
@@ -41,5 +31,17 @@ class ParserSpec extends AnyFunSuite {
     assert(result.limitX() === expected.limitX())
     assert(result.limitY() === expected.limitY())
   }
+
+  //parse tondeuse
+  //doit vérifier qu'(on a bien 4 inputs par tondeuse
+  //donc que le tout est divisible par 4
+
+//  test("parse lawnmowers should return wrong input if size not pair") {
+//    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+//    val wrongParams = Array("1,2,3", "DDD", "3,4,3")
+//    val result: Either[WrongUserInput, Array] =
+//      parser.parseLawnmowers(wrongParams)
+//    assert(Left(WrongUserInput("Wrong lawnmowers parameter number")) === result)
+//  }
 
 }

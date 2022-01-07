@@ -17,20 +17,27 @@ class Parser(string: String) {
   //une fosi que les traitements sont faits, on peut les récupérer via les
   //instances de nos tondeuses je pense
 
-
   //méthodes qu'on veut ici
   //chaque tondeuse avec leur actions
   def parseString() = {
-    val elements = this.string.split(';')
-    println(elements.mkString("Array(", ", ", ")"))
+    val elements: List[String] = this.string.split(';').map(_.trim).toList
+    val board = parseBoard(elements(0))
+    print(board)
+    //val lawnmowers = parseLawnmowers(elements.drop(1))
   }
 
+  //1,2,E DDD 1,3,S GAGAGA;"
+//  def parseLawnmowers(
+//      lawnmowerElements: List[String]
+//  ): Either[WrongUserInput, List[Lawnmower]] = {
+//    bonjour
+//  }
 
   def parseBoard(boardElements: String): Either[WrongUserInput, Board] = {
-    val elements: Array[String] = boardElements.split(',')
+    val elements: List[String] = boardElements.split(',').map(_.trim).toList
     if (elements.length != 2
-      || !(elements(0) forall Character.isDigit)
-      || !(elements(1) forall Character.isDigit)) {
+        || !(elements(0) forall Character.isDigit)
+        || !(elements(1) forall Character.isDigit)) {
       Left(WrongUserInput("Wrong board parameter"))
     } else {
       val limitX = elements(0).toInt
