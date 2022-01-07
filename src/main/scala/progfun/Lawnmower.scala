@@ -6,7 +6,7 @@ import progfun.Direction.{Direction, N, E, S, W, left, right}
 object Direction extends Enumeration {
   type Direction = Value
 
-  val N,E,W,S = Value
+  val N, E, W, S = Value
 
   def right(direction: Value): Direction = direction match {
     case N => E
@@ -25,14 +25,6 @@ object Direction extends Enumeration {
     case _ => direction
   }
 }
-
-object Action extends Enumeration {
-  type Action = Value
-
-  val A,G,D = Value
-}
-
-/*case class Lawnmower(x: Int, y: Int, orientation: Direction)*/
 
 class Lawnmower(x: Int, y: Int, orientation: Direction) {
   def turnRight(): Lawnmower = {
@@ -61,9 +53,11 @@ class Lawnmower(x: Int, y: Int, orientation: Direction) {
   def AfficheX(): Int = {
     this.x
   }
+
   def AfficheY(): Int = {
     this.y
   }
+
   def AfficheOrientation(): Direction = {
     this.orientation
   }
