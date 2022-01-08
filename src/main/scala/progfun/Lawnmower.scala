@@ -26,21 +26,21 @@ object Direction extends Enumeration {
   }
 }
 
-class Lawnmower(x: Int, y: Int, orientation: Direction) {
+class Lawnmower(startX: Int, startY: Int, orientation: Direction, finalX: Int, finalY: Int, actions: List[Action]) {
   def turnRight(): Lawnmower = {
-    new Lawnmower(this.x, this.y, right(this.orientation))
+    new Lawnmower(this.startX, this.startY, right(this.orientation), finalX, finalY, actions)
   }
 
   def turnLeft(): Lawnmower = {
-    new Lawnmower(this.x, this.y, left(this.orientation))
+    new Lawnmower(this.startX, this.startY, left(this.orientation), finalX, finalY, actions)
   }
 
   def moveForward(): Lawnmower = this.orientation match {
-    case N => new Lawnmower(this.x, this.y + 1, this.orientation)
-    case S => new Lawnmower(this.x, this.y - 1, this.orientation)
-    case E => new Lawnmower(this.x + 1, this.y, this.orientation)
-    case W => new Lawnmower(this.x - 1, this.y, this.orientation)
-    case _ => new Lawnmower(this.x, this.y, this.orientation)
+    case N => new Lawnmower(this.startX, this.startY + 1, this.orientation, finalX, finalY, actions)
+    case S => new Lawnmower(this.startX, this.startY - 1, this.orientation, finalX, finalY, actions)
+    case E => new Lawnmower(this.startX + 1, this.startY, this.orientation, finalX, finalY, actions)
+    case W => new Lawnmower(this.startX - 1, this.startY, this.orientation, finalX, finalY, actions)
+    case _ => new Lawnmower(this.startX, this.startY, this.orientation, finalX, finalY, actions)
   }
 
   def move(action: Action): Lawnmower = action match {
@@ -51,11 +51,11 @@ class Lawnmower(x: Int, y: Int, orientation: Direction) {
 
 
   def AfficheX(): Int = {
-    this.x
+    this.startX
   }
 
   def AfficheY(): Int = {
-    this.y
+    this.startY
   }
 
   def AfficheOrientation(): Direction = {

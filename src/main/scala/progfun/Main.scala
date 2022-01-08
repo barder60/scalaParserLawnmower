@@ -1,5 +1,7 @@
 package progfun
 
+import progfun.Action.{A, D, G}
+
 //Résumé du programme
 //1. Prendre une string en entrée puis la parser
 //2. Faire toute la logique de la tondeuse pour qu'elle se déplace
@@ -22,9 +24,15 @@ object Main extends App {
   val limitY = 5
   val indexDebut = 1
   val indexFin = 2
-  val lawnmower1 = new Lawnmower(indexDebut, indexFin, Direction.N)
+  val board = new Board(limitX, limitY)
+  val lawnmower1 = new Lawnmower(indexDebut, indexFin, Direction.N, limitX, limitY, List(G,A,D,G,A,G,A))
+  val lawnmower2 = new Lawnmower(indexDebut, indexFin, Direction.S, limitX, limitY, List(G,A,D,G,A,G,A))
 
   println(lawnmower1.move(Action.G).AfficheX())
   println(lawnmower1.move(Action.G).AfficheY())
   println(lawnmower1.move(Action.G).AfficheOrientation())
+
+  val result = new Result(board, List(lawnmower1, lawnmower2))
+
+  print(result)
 }
