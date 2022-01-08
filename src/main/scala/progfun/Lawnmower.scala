@@ -36,10 +36,10 @@ class Lawnmower(startX: Int, startY: Int, orientation: Direction, finalX: Int, f
   }
 
   def moveForward(): Lawnmower = this.orientation match {
-    case N => new Lawnmower(this.startX, this.startY + 1, this.orientation, finalX, finalY, actions)
-    case S => new Lawnmower(this.startX, this.startY - 1, this.orientation, finalX, finalY, actions)
-    case E => new Lawnmower(this.startX + 1, this.startY, this.orientation, finalX, finalY, actions)
-    case W => new Lawnmower(this.startX - 1, this.startY, this.orientation, finalX, finalY, actions)
+    case N => new Lawnmower(this.startX, this.startY, this.orientation, finalX, finalY + 1, actions)
+    case S => new Lawnmower(this.startX, this.startY, this.orientation, finalX, finalY - 1, actions)
+    case E => new Lawnmower(this.startX, this.startY, this.orientation, finalX + 1, finalY, actions)
+    case W => new Lawnmower(this.startX, this.startY, this.orientation, finalX - 1, finalY, actions)
     case _ => new Lawnmower(this.startX, this.startY, this.orientation, finalX, finalY, actions)
   }
 
