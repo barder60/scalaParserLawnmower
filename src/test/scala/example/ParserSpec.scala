@@ -2,7 +2,7 @@ package example
 
 import exceptions.WrongUserInput
 import org.scalatest.funsuite.AnyFunSuite
-import progfun.{Board, Lawnmower, Parser}
+import progfun.{Action, Board, Direction, Lawnmower, Parser}
 
 class ParserSpec extends AnyFunSuite {
 
@@ -60,12 +60,77 @@ class ParserSpec extends AnyFunSuite {
     "parse lawnmowers should return wrong action if action not known"
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
-    val wrongParams = List("1,2", "XDD", "3,4,3", "ADG")
+    val wrongParams = List("1,2,E", "XDD", "3,4,3", "ADG")
     val result: Either[WrongUserInput, List[Lawnmower]] =
       parser.parseLawnmowers(wrongParams, List())
     assert(
       result === Left(WrongUserInput("Wrong action : X"))
     )
   }
+
+  test(
+    "parse lawnmowers should return wrong orientation if orientation not known"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val wrongParams = List("1,2,3", "DDD", "3,4,3", "ADG")
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(wrongParams, List())
+    assert(
+      result === Left(WrongUserInput("Wrong orientation : 3"))
+    )
+  }
+
+  test(
+    "parse lawnmowers should return wrong pos if posa re not numbers"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val wrongParams = List("zaza,zozo,E", "DDD", "3,4,3", "ADG")
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(wrongParams, List())
+    assert(
+      result === Left(WrongUserInput("Wrong position : zaza"))
+    )
+  }
+
+  test(
+    "parse lawnmowers should return all lawnmowers"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val goodParams = List("1,2,E", "DAGA", "3,4,N", "ADA", "3,4,N", "ADA")
+    val l1 = Lawnmower(
+      1,
+      2,
+      Direction.E,
+      Direction.E,
+      1,
+      2,
+      List(Action.D, Action.A, Action.G, Action.A)
+    )
+    val l2 = Lawnmower(
+      3,
+      4,
+      Direction.N,
+      Direction.N,
+      3,
+      4,
+      List(Action.A, Action.D, Action.A)
+    )
+    val l3 = Lawnmower(
+      3,
+      4,
+      Direction.N,
+      Direction.N,
+      3,
+      4,
+      List(Action.A, Action.D, Action.A)
+    )
+    val expectedLawnmowers: Either[WrongUserInput, List[Lawnmower]] =
+      Right(List(l1, l2, l3))
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(goodParams, List())
+    assert(result === expectedLawnmowers)
+  }
+
+  //TODO vérifier que les positions sont dans le champs du board aussi...
 
 }

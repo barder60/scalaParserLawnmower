@@ -3,7 +3,7 @@ package progfun
 import progfun.Action.{A, Action, D, G}
 import progfun.Direction.{left, right, Direction, E, N, S, W}
 
-class Lawnmower(
+case class Lawnmower(
     startX: Int,
     startY: Int,
     startOrientation: Direction,
@@ -13,7 +13,7 @@ class Lawnmower(
     actions: List[Action]
 ) {
   def turnRight(): Lawnmower = {
-    new Lawnmower(
+    Lawnmower(
       this.startX,
       this.startY,
       this.startOrientation,
@@ -25,7 +25,7 @@ class Lawnmower(
   }
 
   def turnLeft(): Lawnmower = {
-    new Lawnmower(
+    Lawnmower(
       this.startX,
       this.startY,
       this.startOrientation,
@@ -38,7 +38,7 @@ class Lawnmower(
 
   def moveForward(): Lawnmower = this.finalOrientation match {
     case N =>
-      new Lawnmower(
+      Lawnmower(
         this.startX,
         this.startY,
         this.startOrientation,
@@ -48,7 +48,7 @@ class Lawnmower(
         actions
       )
     case S =>
-      new Lawnmower(
+      Lawnmower(
         this.startX,
         this.startY,
         this.startOrientation,
@@ -58,7 +58,7 @@ class Lawnmower(
         actions
       )
     case E =>
-      new Lawnmower(
+      Lawnmower(
         this.startX,
         this.startY,
         this.startOrientation,
@@ -68,7 +68,7 @@ class Lawnmower(
         actions
       )
     case W =>
-      new Lawnmower(
+      Lawnmower(
         this.startX,
         this.startY,
         this.startOrientation,
@@ -78,7 +78,7 @@ class Lawnmower(
         actions
       )
     case _ =>
-      new Lawnmower(
+      Lawnmower(
         this.startX,
         this.startY,
         this.startOrientation,
@@ -95,15 +95,15 @@ class Lawnmower(
     case D => turnRight()
   }
 
-  def AfficheX(): Int = {
-    this.startX
-  }
-
-  def AfficheY(): Int = {
-    this.startY
-  }
-
-  def AfficheOrientation(): Direction = {
-    this.finalOrientation
-  }
+//  def AfficheX(): Int = {
+//    this.startX
+//  }
+//
+//  def AfficheY(): Int = {
+//    this.startY
+//  }
+//
+//  def AfficheOrientation(): Direction = {
+//    this.finalOrientation
+//  }
 }

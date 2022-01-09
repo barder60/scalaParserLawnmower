@@ -1,5 +1,7 @@
 package progfun
 
+import exceptions.WrongUserInput
+
 object Direction extends Enumeration {
   type Direction = Value
 
@@ -21,12 +23,11 @@ object Direction extends Enumeration {
     case _ => direction
   }
 
-  def map(c: String): Direction = c match {
-    case "E" => E
-    case "S" => S
-    case "W" => W
-    case "N" => N
-    //TODO renvoyer une excpetion avec Either ici ?
-    case _ => N
+  def map(c: String): Either[WrongUserInput, Direction] = c match {
+    case "E" => Right(E)
+    case "S" => Right(S)
+    case "W" => Right(W)
+    case "N" => Right(N)
+    case _   => Left(WrongUserInput("Wrong orientation : ".concat(c)))
   }
 }

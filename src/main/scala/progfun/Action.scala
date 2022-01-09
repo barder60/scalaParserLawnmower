@@ -11,7 +11,6 @@ object Action extends Enumeration {
     case 'A' => Right(A)
     case 'G' => Right(G)
     case 'D' => Right(D)
-    //TODO mettre either ici aussi
-    case _ => Left(WrongUserInput(s"(Wrong action : $action)"))
+    case _ => Left(WrongUserInput("Wrong action : ".concat(action.toString)))
   }
 }

@@ -5,9 +5,6 @@ import progfun.Action.Action
 
 class Parser(string: String) {
 
-  //ça veut bien dire qu'on fournit à notre parseur un objet Result ?
-  //pas forcément, il peut tout aussi bien le créer et le renvoyer
-
   //méthodes qu'on veut ici
   //chaque tondeuse avec leur actions
   //TODO après avoir reçu le résult, on peut boucler sur les tondeuses pour recréer l'objet Reesult avec les pos finales
@@ -20,39 +17,31 @@ class Parser(string: String) {
     } yield new Result(board, lawnmowers)
   }
 
-  //soit on instancie tout
-  //soit àc haque instanciations on fait le traitement de hein t'as capté
-
-  //1,2,E DDD 1,3,S GAGAGA"
   def parseLawnmowers(
       lawnmowerElements: List[String],
       lawnmowers: List[Lawnmower]
   ): Either[WrongUserInput, List[Lawnmower]] = {
     if (lawnmowerElements.isEmpty) {
-      Right(lawnmowers)
+      Right(lawnmowers.reverse)
     } else if (lawnmowerElements.length % 2 != 0) {
       Left(WrongUserInput("Wrong lawnmowers parameter number"))
     } else {
       createLawnmower(lawnmowerElements(0), lawnmowerElements(1)) match {
         case Right(newLawnmower: Lawnmower) =>
           lawnmowers match {
-            case x :: Nil =>
+            case x :: rest =>
               parseLawnmowers(
                 lawnmowerElements.drop(2),
-                List(
-                  x,
-                  newLawnmower
-                )
+                newLawnmower :: x :: rest
               )
-            case _ =>
+            case Nil =>
               parseLawnmowers(
                 lawnmowerElements.drop(2),
                 List(newLawnmower)
               )
           }
-        case other => List(other)
+        case Left(error: Error) => Left(error)
       }
-
     }
   }
 
@@ -64,20 +53,27 @@ class Parser(string: String) {
     if (initPositions.length != 3) {
       Left(WrongUserInput("Wrong lawnmowers position / orientation"))
     } else {
-      val startX = initPositions(0).toInt
-      val startY = initPositions(1).toInt
-      val startOrientation = Direction.map(initPositions(2))
-      for {
-        actions <- createActions(actionsString, List())
-      } yield new Lawnmower(
-        startX,
-        startY,
-        startOrientation,
-        startOrientation,
-        startX,
-        startY,
-        actions
-      )
+      if (!(initPositions(0) forall Character.isDigit)) {
+        Left(WrongUserInput("Wrong position : ".concat(initPositions(0))))
+      } else if (!(initPositions(1) forall Character.isDigit)) {
+        Left(WrongUserInput("Wrong position : ".concat(initPositions(1))))
+      } else {
+        val startX = initPositions(0).toInt
+        val startY = initPositions(1).toInt
+        for {
+          startOrientation <- Direction.map(initPositions(2))
+          actions          <- createActions(actionsString, List())
+        } yield Lawnmower(
+          startX,
+          startY,
+          startOrientation,
+          startOrientation,
+          startX,
+          startY,
+          actions
+        )
+      }
+
     }
   }
 
@@ -88,23 +84,23 @@ class Parser(string: String) {
     if (actionsString.nonEmpty) {
       Action.mapToAction(actionsString.head) match {
         case Right(newAction: Action) =>
-          actions match {
-            case x :: Nil =>
+          actions match { //ah merded onc en gros
+            case x :: rest =>
               createActions(
                 actionsString.substring(1),
-                List(x, newAction)
+                newAction :: x :: rest
               )
-            case _ =>
+            case Nil =>
               createActions(
                 actionsString.substring(1),
                 List(newAction)
               )
           }
-        case _ => _
+        case Left(error: Error) => Left(error)
       }
 
     } else {
-      Right(actions)
+      Right(actions.reverse)
     }
 
   }
