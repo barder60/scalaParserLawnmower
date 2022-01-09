@@ -2,7 +2,7 @@ package example
 
 import exceptions.WrongUserInput
 import org.scalatest.funsuite.AnyFunSuite
-import progfun.{Board, Parser}
+import progfun.{Board, Lawnmower, Parser}
 
 class ParserSpec extends AnyFunSuite {
 
@@ -12,7 +12,7 @@ class ParserSpec extends AnyFunSuite {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
 
     val result: Either[WrongUserInput, Board] = parser.parseBoard("43")
-    assert(Left(WrongUserInput("Wrong board parameter")) === result)
+    assert(result === Left(WrongUserInput("Wrong board parameter")))
   }
 
   test("parse board should throw incorrect parameter exception when not int") {
@@ -20,7 +20,7 @@ class ParserSpec extends AnyFunSuite {
 
     val result: Either[WrongUserInput, Board] =
       parser.parseBoard("zoulou, zoulou")
-    assert(Left(WrongUserInput("Wrong board parameter")) === result)
+    assert(result === Left(WrongUserInput("Wrong board parameter")))
   }
 
   test("parse board should return board") {
@@ -34,14 +34,38 @@ class ParserSpec extends AnyFunSuite {
 
   //parse tondeuse
   //doit vérifier qu'(on a bien 4 inputs par tondeuse
-  //donc que le tout est divisible par 4
+  //que y'a bien 3 inputs dans chaque position / direction
 
-//  test("parse lawnmowers should return wrong input if size not pair") {
-//    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
-//    val wrongParams = Array("1,2,3", "DDD", "3,4,3")
-//    val result: Either[WrongUserInput, Array] =
-//      parser.parseLawnmowers(wrongParams)
-//    assert(Left(WrongUserInput("Wrong lawnmowers parameter number")) === result)
-//  }
+  test("parse lawnmowers should return wrong input if size not pair") {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val wrongParams = List("1,2,3", "DDD", "3,4,3")
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(wrongParams, List())
+    assert(result === Left(WrongUserInput("Wrong lawnmowers parameter number")))
+  }
+
+  test(
+    "parse lawnmowers should return wrong input if there isnt 3 param for position and direction"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val wrongParams = List("1,2", "DDD", "3,4,3", "ADG")
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(wrongParams, List())
+    assert(
+      result === Left(WrongUserInput("Wrong lawnmowers position / orientation"))
+    )
+  }
+
+  test(
+    "parse lawnmowers should return wrong action if action not known"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val wrongParams = List("1,2", "XDD", "3,4,3", "ADG")
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(wrongParams, List())
+    assert(
+      result === Left(WrongUserInput("Wrong action : X"))
+    )
+  }
 
 }
