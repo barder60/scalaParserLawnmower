@@ -5,16 +5,14 @@ import progfun.Action.Action
 
 class Parser(string: String) {
 
-  //méthodes qu'on veut ici
-  //chaque tondeuse avec leur actions
   //TODO après avoir reçu le résult, on peut boucler sur les tondeuses pour recréer l'objet Reesult avec les pos finales
   def parseString(): Either[WrongUserInput, Result] = {
     val elements: List[String] = this.string.split(';').map(_.trim).toList
 
     for {
-      board      <- parseBoard(elements(0))
+      board <- parseBoard(elements(0))
       lawnmowers <- parseLawnmowers(board, elements.drop(1), List())
-    } yield new Result(board, lawnmowers)
+    } yield Result(board, lawnmowers)
   }
 
   def parseLawnmowers(
@@ -30,7 +28,7 @@ class Parser(string: String) {
       createLawnmower(lawnmowerElements(0), lawnmowerElements(1)) match {
         case Right(newLawnmower: Lawnmower) =>
           if (newLawnmower.startX > board
-                .limitX() || newLawnmower.startY > board.limitY()) {
+            .limitX || newLawnmower.startY > board.limitY) {
             Left(
               WrongUserInput(
                 "Lawnmower with positions ("
@@ -38,9 +36,9 @@ class Parser(string: String) {
                   .concat(",")
                   .concat(newLawnmower.startY.toString)
                   .concat(") can not be outside of the board (")
-                  .concat(board.limitX().toString)
+                  .concat(board.limitX.toString)
                   .concat(",")
-                  .concat(board.limitY().toString)
+                  .concat(board.limitY.toString)
                   .concat(")")
               )
             )
@@ -105,7 +103,7 @@ class Parser(string: String) {
     if (actionsString.nonEmpty) {
       Action.mapToAction(actionsString.head) match {
         case Right(newAction: Action) =>
-          actions match { //ah merded onc en gros
+          actions match {
             case x :: rest =>
               createActions(
                 actionsString.substring(1),

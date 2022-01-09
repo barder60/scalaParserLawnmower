@@ -94,16 +94,4 @@ case class Lawnmower(
     case G => turnLeft()
     case D => turnRight()
   }
-
-//  def AfficheX(): Int = {
-//    this.startX
-//  }
-//
-//  def AfficheY(): Int = {
-//    this.startY
-//  }
-//
-//  def AfficheOrientation(): Direction = {
-//    this.finalOrientation
-//  }
 }

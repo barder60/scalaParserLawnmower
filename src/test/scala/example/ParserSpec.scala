@@ -2,7 +2,7 @@ package example
 
 import exceptions.WrongUserInput
 import org.scalatest.funsuite.AnyFunSuite
-import progfun.{Action, Board, Direction, Lawnmower, Parser}
+import progfun.{Action, Board, Direction, Lawnmower, Parser, Result}
 
 class ParserSpec extends AnyFunSuite {
 
@@ -23,7 +23,9 @@ class ParserSpec extends AnyFunSuite {
     assert(result === Left(WrongUserInput("Wrong board parameter")))
   }
 
-  test("parse board should throw incorrect parameter exception when not negative parameters") {
+  test(
+    "parse board should throw incorrect parameter exception when not negative parameters"
+  ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
 
     val result: Either[WrongUserInput, Board] =
@@ -36,13 +38,9 @@ class ParserSpec extends AnyFunSuite {
     val expected = Board(5, 5)
     val board: Either[WrongUserInput, Board] = parser.parseBoard("5,5")
     val result = board.getOrElse(Board(0, 0))
-    assert(result.limitX() === expected.limitX())
-    assert(result.limitY() === expected.limitY())
+    assert(result.limitX === expected.limitX)
+    assert(result.limitY === expected.limitY)
   }
-
-  //parse tondeuse
-  //doit vérifier qu'(on a bien 4 inputs par tondeuse
-  //que y'a bien 3 inputs dans chaque position / direction
 
   test("parse lawnmowers should return wrong input if size not pair") {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
@@ -153,11 +151,13 @@ class ParserSpec extends AnyFunSuite {
     val board = Board(5, 5)
     val result: Either[WrongUserInput, List[Lawnmower]] =
       parser.parseLawnmowers(board, wrongParams, List())
-    assert(result === Left(
-      WrongUserInput(
-        "Lawnmower with positions (6,2) can not be outside of the board (5,5)"
+    assert(
+      result === Left(
+        WrongUserInput(
+          "Lawnmower with positions (6,2) can not be outside of the board (5,5)"
+        )
       )
-    ))
+    )
   }
 
   test(
@@ -168,11 +168,69 @@ class ParserSpec extends AnyFunSuite {
     val board = Board(5, 5)
     val result: Either[WrongUserInput, List[Lawnmower]] =
       parser.parseLawnmowers(board, wrongParams, List())
-    assert(result === Left(
-      WrongUserInput(
-        "Wrong position : -6"
+    assert(
+      result === Left(
+        WrongUserInput(
+          "Wrong position : -6"
+        )
       )
-    ))
+    )
+  }
+
+  test(
+    "parse string should return exception if board wrong"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    assert(
+      parser.parseString() === Left(WrongUserInput("Wrong board parameter"))
+    )
+  }
+
+  test(
+    "parse string should return exception if lawnmower wrong"
+  ) {
+    val parser = new Parser("5, 5;1,2,E;DDD;1,3,2;GAGAGA;")
+    assert(
+      parser.parseString() === Left(WrongUserInput("Wrong orientation : 2"))
+    )
+  }
+
+  test(
+    "parse string should return good result"
+  ) {
+    val parser = new Parser("7, 7;1,2,E;DAGA;3,4,N;ADA;3,4,N;ADA;")
+    val board = Board(7, 7)
+    val l1 = Lawnmower(
+      1,
+      2,
+      Direction.E,
+      Direction.E,
+      1,
+      2,
+      List(Action.D, Action.A, Action.G, Action.A)
+    )
+    val l2 = Lawnmower(
+      3,
+      4,
+      Direction.N,
+      Direction.N,
+      3,
+      4,
+      List(Action.A, Action.D, Action.A)
+    )
+    val l3 = Lawnmower(
+      3,
+      4,
+      Direction.N,
+      Direction.N,
+      3,
+      4,
+      List(Action.A, Action.D, Action.A)
+    )
+
+    val expectedLawnmowers = List(l1, l2, l3)
+    val result = Result(board, expectedLawnmowers)
+    assert(parser.parseString() === Right(result))
   }
 
 }
