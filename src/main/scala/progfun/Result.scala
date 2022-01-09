@@ -1,12 +1,18 @@
 package progfun
 
-class Result (board: Board, lawnmowers: List[Lawnmower]) {
+import play.api.libs.json.{JsObject, Writes}
+
+case class Result (board: Board, lawnmowers: List[Lawnmower]) {
   def Board(): Board = {
     this.board
   }
+}
 
-  def lawnmowers(): List[Lawnmower] = {
-    this.lawnmowers
-  }
-
+object Result {
+  implicit val writesResult: Writes[Result] = (Result: Result) => JsObject(
+    Map(
+      "limite" -> Writes.of[Board].writes(Result.board),
+      "toundeuses" -> Writes.of[List[Lawnmower]].writes(Result.lawnmowers)
+    )
+  )
 }

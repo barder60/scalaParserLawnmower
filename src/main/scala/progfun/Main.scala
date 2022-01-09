@@ -1,5 +1,6 @@
 package progfun
 
+import play.api.libs.json.Writes
 import progfun.Action.{A, D, G}
 
 //Résumé du programme
@@ -32,7 +33,8 @@ object Main extends App {
   println(lawnmower1.move(Action.G).AfficheY())
   println(lawnmower1.move(Action.G).AfficheOrientation())
 
-  val result = new Result(board, List(lawnmower1, lawnmower2))
+  val resultClass = new Result(board, List(lawnmower1, lawnmower2))
 
-  print(result)
+  val resultJSON = Writes.of[Result].writes(resultClass)
+  println(resultJSON)
 }

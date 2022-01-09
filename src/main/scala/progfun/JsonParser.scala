@@ -1,13 +1,15 @@
 package progfun
 
 import play.api.libs.json.{JsFalse, JsNumber, JsString, JsTrue, JsValue}
-
-import java.time.LocalDate
+import progfun.Direction.Direction
 
 case class JsonParser() {
 
   trait Writes[A] {
     def writes(v: A): JsValue
+  }
+  trait WritesTwo[A, B] {
+    def writes(v: A, w: B): JsValue
   }
 
   object Writes {
@@ -20,7 +22,7 @@ case class JsonParser() {
       else JsFalse
     }
 
-    implicit val writesLocalDate: Writes[LocalDate] = (v: LocalDate) => JsString(v.toString)
+    implicit val writesDirection: Writes[Direction] = (v: Direction) => JsString(v.toString)
 
     def of[A](implicit w: Writes[A]): Writes[A] = w
   }

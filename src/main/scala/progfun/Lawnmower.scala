@@ -1,7 +1,8 @@
 package progfun
 
+import play.api.libs.json.{JsObject, Writes}
 import progfun.Action.{A, Action, D, G}
-import progfun.Direction.{Direction, N, E, S, W, left, right}
+import progfun.Direction.{Direction, E, N, S, W, left, right}
 
 object Direction extends Enumeration {
   type Direction = Value
@@ -26,7 +27,7 @@ object Direction extends Enumeration {
   }
 }
 
-class Lawnmower(startX: Int, startY: Int, orientation: Direction, finalX: Int, finalY: Int, actions: List[Action]) {
+case class Lawnmower(startX: Int, startY: Int, orientation: Direction, finalX: Int, finalY: Int, actions: List[Action]) {
   def turnRight(): Lawnmower = {
     new Lawnmower(this.startX, this.startY, right(this.orientation), finalX, finalY, actions)
   }
@@ -63,4 +64,23 @@ class Lawnmower(startX: Int, startY: Int, orientation: Direction, finalX: Int, f
   }
 }
 
+object Lawnmower {
+  implicit val writesJSON: Writes[Lawnmower] = (v: Lawnmower) => JsObject(
+    Map(
+      "debut" -> JsObject(Map(
+        "point" -> JsObject(Map(
+          "x" -> Writes.of[Int].writes(v.startX),
+          "y" -> Writes.of[Int].writes(v.startY),
+        )),
+        "direction" -> Writes.of[Direction].writes(v.orientation)
+      )
+    ), "fin" -> JsObject(Map(
+        "point" -> JsObject(Map(
+          "x" -> Writes.of[Int].writes(v.finalX),
+          "y" -> Writes.of[Int].writes(v.finalY),
+        )),
+        "direction" -> Writes.of[Direction].writes(v.orientation)
+      ))
+  ))
+}
 
