@@ -13,11 +13,12 @@ class Parser(string: String) {
 
     for {
       board      <- parseBoard(elements(0))
-      lawnmowers <- parseLawnmowers(elements.drop(1), List())
+      lawnmowers <- parseLawnmowers(board, elements.drop(1), List())
     } yield new Result(board, lawnmowers)
   }
 
   def parseLawnmowers(
+      board: Board,
       lawnmowerElements: List[String],
       lawnmowers: List[Lawnmower]
   ): Either[WrongUserInput, List[Lawnmower]] = {
@@ -28,18 +29,38 @@ class Parser(string: String) {
     } else {
       createLawnmower(lawnmowerElements(0), lawnmowerElements(1)) match {
         case Right(newLawnmower: Lawnmower) =>
-          lawnmowers match {
-            case x :: rest =>
-              parseLawnmowers(
-                lawnmowerElements.drop(2),
-                newLawnmower :: x :: rest
+          if (newLawnmower.startX > board
+                .limitX() || newLawnmower.startY > board.limitY()) {
+            Left(
+              WrongUserInput(
+                "Lawnmower with positions ("
+                  .concat(newLawnmower.startX.toString)
+                  .concat(",")
+                  .concat(newLawnmower.startY.toString)
+                  .concat(") can not be outside of the board (")
+                  .concat(board.limitX().toString)
+                  .concat(",")
+                  .concat(board.limitY().toString)
+                  .concat(")")
               )
-            case Nil =>
-              parseLawnmowers(
-                lawnmowerElements.drop(2),
-                List(newLawnmower)
-              )
+            )
+          } else {
+            lawnmowers match {
+              case x :: rest =>
+                parseLawnmowers(
+                  board,
+                  lawnmowerElements.drop(2),
+                  newLawnmower :: x :: rest
+                )
+              case Nil =>
+                parseLawnmowers(
+                  board,
+                  lawnmowerElements.drop(2),
+                  List(newLawnmower)
+                )
+            }
           }
+
         case Left(error: Error) => Left(error)
       }
     }

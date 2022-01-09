@@ -38,9 +38,10 @@ class ParserSpec extends AnyFunSuite {
 
   test("parse lawnmowers should return wrong input if size not pair") {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val board = Board(7, 7)
     val wrongParams = List("1,2,3", "DDD", "3,4,3")
     val result: Either[WrongUserInput, List[Lawnmower]] =
-      parser.parseLawnmowers(wrongParams, List())
+      parser.parseLawnmowers(board, wrongParams, List())
     assert(result === Left(WrongUserInput("Wrong lawnmowers parameter number")))
   }
 
@@ -49,8 +50,9 @@ class ParserSpec extends AnyFunSuite {
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
     val wrongParams = List("1,2", "DDD", "3,4,3", "ADG")
+    val board = Board(7, 7)
     val result: Either[WrongUserInput, List[Lawnmower]] =
-      parser.parseLawnmowers(wrongParams, List())
+      parser.parseLawnmowers(board, wrongParams, List())
     assert(
       result === Left(WrongUserInput("Wrong lawnmowers position / orientation"))
     )
@@ -61,8 +63,9 @@ class ParserSpec extends AnyFunSuite {
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
     val wrongParams = List("1,2,E", "XDD", "3,4,3", "ADG")
+    val board = Board(7, 7)
     val result: Either[WrongUserInput, List[Lawnmower]] =
-      parser.parseLawnmowers(wrongParams, List())
+      parser.parseLawnmowers(board, wrongParams, List())
     assert(
       result === Left(WrongUserInput("Wrong action : X"))
     )
@@ -73,8 +76,9 @@ class ParserSpec extends AnyFunSuite {
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
     val wrongParams = List("1,2,3", "DDD", "3,4,3", "ADG")
+    val board = Board(7, 7)
     val result: Either[WrongUserInput, List[Lawnmower]] =
-      parser.parseLawnmowers(wrongParams, List())
+      parser.parseLawnmowers(board, wrongParams, List())
     assert(
       result === Left(WrongUserInput("Wrong orientation : 3"))
     )
@@ -85,8 +89,9 @@ class ParserSpec extends AnyFunSuite {
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
     val wrongParams = List("zaza,zozo,E", "DDD", "3,4,3", "ADG")
+    val board = Board(7, 7)
     val result: Either[WrongUserInput, List[Lawnmower]] =
-      parser.parseLawnmowers(wrongParams, List())
+      parser.parseLawnmowers(board, wrongParams, List())
     assert(
       result === Left(WrongUserInput("Wrong position : zaza"))
     )
@@ -97,6 +102,7 @@ class ParserSpec extends AnyFunSuite {
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
     val goodParams = List("1,2,E", "DAGA", "3,4,N", "ADA", "3,4,N", "ADA")
+    val board = Board(7, 7)
     val l1 = Lawnmower(
       1,
       2,
@@ -127,10 +133,23 @@ class ParserSpec extends AnyFunSuite {
     val expectedLawnmowers: Either[WrongUserInput, List[Lawnmower]] =
       Right(List(l1, l2, l3))
     val result: Either[WrongUserInput, List[Lawnmower]] =
-      parser.parseLawnmowers(goodParams, List())
+      parser.parseLawnmowers(board, goodParams, List())
     assert(result === expectedLawnmowers)
   }
 
-  //TODO vérifier que les positions sont dans le champs du board aussi...
+  test(
+    "parse lawnmowers should send error when lawnmower outside of the board"
+  ) {
+    val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
+    val wrongParams = List("6,2,E", "DDD", "5,5,3", "ADG")
+    val board = Board(7, 7)
+    val result: Either[WrongUserInput, List[Lawnmower]] =
+      parser.parseLawnmowers(board, wrongParams, List())
+    result === Left(
+      WrongUserInput(
+        "Lawnmower with positions (6,2) can not be outside of the board (5,5)"
+      )
+    )
+  }
 
 }
