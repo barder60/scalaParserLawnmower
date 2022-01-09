@@ -17,6 +17,15 @@ object Main extends App {
 //  parser.parseString()
 
 
+  val input = "7, 7;1,2,E;DAGA;3,4,N;ADA;3,4,N;ADA;"
+  val parser = new Parser(input)
+  val initialResult = parser.parseString()
+  for {
+    result <- initialResult
+  } {
+    val finalResult = result.perform(List(), result.lawnmowers)
+    println(finalResult)
+  }
 //  val board = Board(5, 5) //juste pour test t'as capté
 //  println(board.limitX())
 //  println(board.limitY())
