@@ -30,8 +30,8 @@ class ResultSpec extends AnyFunSuite {
     val l1 = Lawnmower(
       4,
       1,
-      Direction.E,
-      Direction.N,
+      Orientation.E,
+      Orientation.N,
       6,
       1,
       List(Action.A, Action.A, Action.G)
@@ -39,8 +39,8 @@ class ResultSpec extends AnyFunSuite {
     val l2 = Lawnmower(
       3,
       4,
-      Direction.N,
-      Direction.E,
+      Orientation.N,
+      Orientation.E,
       4,
       5,
       List(Action.A, Action.D, Action.A)
@@ -48,8 +48,8 @@ class ResultSpec extends AnyFunSuite {
     val l3 = Lawnmower(
       3,
       4,
-      Direction.N,
-      Direction.E,
+      Orientation.N,
+      Orientation.E,
       4,
       5,
       List(Action.A, Action.D, Action.A)

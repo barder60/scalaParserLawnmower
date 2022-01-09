@@ -3,17 +3,17 @@ package progfun
 import play.api.libs.json.{JsObject, Writes}
 
 import progfun.Action.{A, Action, D, G}
-import progfun.Direction.{left, right, Direction, E, N, S, W}
+import progfun.Orientation.{left, right, Orientation, E, N, S, W}
 
 case class Lawnmower(
-    startX: Int,
-    startY: Int,
-    startOrientation: Direction,
-    finalOrientation: Direction,
-    finalX: Int,
-    finalY: Int,
-    actions: List[Action]
-) {
+                      startX: Int,
+                      startY: Int,
+                      startOrientation: Orientation,
+                      finalOrientation: Orientation,
+                      finalX: Int,
+                      finalY: Int,
+                      actions: List[Action]
+                    ) {
   def turnRight(): Lawnmower = {
     Lawnmower(
       this.startX,
@@ -99,24 +99,32 @@ case class Lawnmower(
 }
 
 object Lawnmower {
-  implicit val writesJSON: Writes[Lawnmower] = (v: Lawnmower) => JsObject(
-    Map(
-      "debut" -> JsObject(Map(
-        "point" -> JsObject(Map(
-          "x" -> Writes.of[Int].writes(v.startX),
-          "y" -> Writes.of[Int].writes(v.startY),
-        )),
-        "direction" -> Writes.of[Direction].writes(v.startOrientation)
+  implicit val writesJSON: Writes[Lawnmower] = (v: Lawnmower) =>
+    JsObject(
+      Map(
+        "debut" -> JsObject(
+          Map(
+            "point" -> JsObject(
+              Map(
+                "x" -> Writes.of[Int].writes(v.startX),
+                "y" -> Writes.of[Int].writes(v.startY)
+              )
+            ),
+            "direction" -> Writes.of[Orientation].writes(v.startOrientation)
+          )
+        ),
+        "instructions" -> Writes.of[List[Action]].writes(v.actions),
+        "fin" -> JsObject(
+          Map(
+            "point" -> JsObject(
+              Map(
+                "x" -> Writes.of[Int].writes(v.finalX),
+                "y" -> Writes.of[Int].writes(v.finalY)
+              )
+            ),
+            "direction" -> Writes.of[Orientation].writes(v.finalOrientation)
+          )
+        )
       )
-    ),
-      "instructions" -> Writes.of[List[Action]].writes(v.actions),
-      "fin" -> JsObject(Map(
-        "point" -> JsObject(Map(
-          "x" -> Writes.of[Int].writes(v.finalX),
-          "y" -> Writes.of[Int].writes(v.finalY),
-        )),
-        "direction" -> Writes.of[Direction].writes(v.finalOrientation)
-      ))
-  ))
+    )
 }
-

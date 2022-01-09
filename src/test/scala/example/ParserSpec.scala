@@ -2,7 +2,7 @@ package example
 
 import exceptions.WrongUserInput
 import org.scalatest.funsuite.AnyFunSuite
-import progfun.{Action, Board, Direction, Lawnmower, Parser, Result}
+import progfun.{Action, Board, Orientation, Lawnmower, Parser, Result}
 
 class ParserSpec extends AnyFunSuite {
 
@@ -52,7 +52,7 @@ class ParserSpec extends AnyFunSuite {
   }
 
   test(
-    "parse lawnmowers should return wrong input if there isnt 3 param for position and direction"
+    "parse lawnmowers should return wrong input if there isnt 3 param for position and orientation"
   ) {
     val parser = new Parser("43;1,2,E;DDD;1,3,S;GAGAGA;")
     val wrongParams = List("1,2", "DDD", "3,4,3", "ADG")
@@ -112,8 +112,8 @@ class ParserSpec extends AnyFunSuite {
     val l1 = Lawnmower(
       1,
       2,
-      Direction.E,
-      Direction.E,
+      Orientation.E,
+      Orientation.E,
       1,
       2,
       List(Action.D, Action.A, Action.G, Action.A)
@@ -121,8 +121,8 @@ class ParserSpec extends AnyFunSuite {
     val l2 = Lawnmower(
       3,
       4,
-      Direction.N,
-      Direction.N,
+      Orientation.N,
+      Orientation.N,
       3,
       4,
       List(Action.A, Action.D, Action.A)
@@ -130,8 +130,8 @@ class ParserSpec extends AnyFunSuite {
     val l3 = Lawnmower(
       3,
       4,
-      Direction.N,
-      Direction.N,
+      Orientation.N,
+      Orientation.N,
       3,
       4,
       List(Action.A, Action.D, Action.A)
@@ -203,8 +203,8 @@ class ParserSpec extends AnyFunSuite {
     val l1 = Lawnmower(
       1,
       2,
-      Direction.E,
-      Direction.E,
+      Orientation.E,
+      Orientation.E,
       1,
       2,
       List(Action.D, Action.A, Action.G, Action.A)
@@ -212,8 +212,8 @@ class ParserSpec extends AnyFunSuite {
     val l2 = Lawnmower(
       3,
       4,
-      Direction.N,
-      Direction.N,
+      Orientation.N,
+      Orientation.N,
       3,
       4,
       List(Action.A, Action.D, Action.A)
@@ -221,8 +221,8 @@ class ParserSpec extends AnyFunSuite {
     val l3 = Lawnmower(
       3,
       4,
-      Direction.N,
-      Direction.N,
+      Orientation.N,
+      Orientation.N,
       3,
       4,
       List(Action.A, Action.D, Action.A)

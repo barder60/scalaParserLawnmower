@@ -1,15 +1,12 @@
 package progfun
 
 import play.api.libs.json.{JsFalse, JsNumber, JsString, JsTrue, JsValue}
-import progfun.Direction.Direction
+import progfun.Orientation.Orientation
 
-case class JsonParser() {
+case class JsonWriter() {
 
   trait Writes[A] {
     def writes(v: A): JsValue
-  }
-  trait WritesTwo[A, B] {
-    def writes(v: A, w: B): JsValue
   }
 
   object Writes {
@@ -22,7 +19,8 @@ case class JsonParser() {
       else JsFalse
     }
 
-    implicit val writesDirection: Writes[Direction] = (v: Direction) => JsString(v.toString)
+    implicit val writesOrientation: Writes[Orientation] = (v: Orientation) =>
+      JsString(v.toString)
 
     def of[A](implicit w: Writes[A]): Writes[A] = w
   }

@@ -5,7 +5,6 @@ import progfun.Action.Action
 
 class Parser(string: String) {
 
-  //TODO après avoir reçu le résult, on peut boucler sur les tondeuses pour recréer l'objet Reesult avec les pos finales
   def parseString(): Either[WrongUserInput, Result] = {
     val elements: List[String] = this.string.split(';').map(_.trim).toList
 
@@ -27,8 +26,7 @@ class Parser(string: String) {
     } else {
       createLawnmower(lawnmowerElements(0), lawnmowerElements(1)) match {
         case Right(newLawnmower: Lawnmower) =>
-          if (newLawnmower.startX > board
-            .limitX || newLawnmower.startY > board.limitY) {
+          if (newLawnmower.startX > board.limitX || newLawnmower.startY > board.limitY) {
             Left(
               WrongUserInput(
                 "Lawnmower with positions ("
@@ -80,8 +78,8 @@ class Parser(string: String) {
         val startX = initPositions(0).toInt
         val startY = initPositions(1).toInt
         for {
-          startOrientation <- Direction.map(initPositions(2))
-          actions          <- createActions(actionsString, List())
+          startOrientation <- Orientation.map(initPositions(2))
+          actions <- createActions(actionsString, List())
         } yield Lawnmower(
           startX,
           startY,
