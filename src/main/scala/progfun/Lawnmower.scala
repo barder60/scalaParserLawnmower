@@ -108,7 +108,9 @@ object Lawnmower {
         )),
         "direction" -> Writes.of[Direction].writes(v.startOrientation)
       )
-    ), "fin" -> JsObject(Map(
+    ),
+      "instructions" -> Writes.of[List[Action]].writes(v.actions),
+      "fin" -> JsObject(Map(
         "point" -> JsObject(Map(
           "x" -> Writes.of[Int].writes(v.finalX),
           "y" -> Writes.of[Int].writes(v.finalY),
