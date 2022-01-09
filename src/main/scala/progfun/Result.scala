@@ -2,11 +2,7 @@ package progfun
 
 import play.api.libs.json.{JsObject, Writes}
 
-case class Result (board: Board, lawnmowers: List[Lawnmower]) {
-  def Board(): Board = {
-    this.board
-  }
-}
+case class Result(board: Board, lawnmowers: List[Lawnmower])
 
 object Result {
   implicit val writesResult: Writes[Result] = (Result: Result) => JsObject(
