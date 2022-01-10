@@ -8,14 +8,11 @@ trait WritesCSV[A] {
 }
 
 case object WriteCsv {
-
   implicit val writesInt: WritesCSV[Int] = (v: Int) => v.toString
 
   implicit val writesString: WritesCSV[String] = (v: String) => v
 
   implicit val writesOrientation: WritesCSV[Orientation] = (v: Orientation) => v.toString
-
-  implicit val writesBoardCSV: WritesCSV[Board] = (v: Board) => s"${v.limitX.toString};${v.limitY.toString}"
 
   implicit val writesAction: WritesCSV[Action] = (v: Action) => v.toString
 
@@ -26,20 +23,16 @@ case object WriteCsv {
   }
 
   implicit val writesLawnmower: WritesCSV[Lawnmower] = (v: Lawnmower) =>
-    s"${WriteCsv.writesInt(v.startX)};${WriteCsv.writesInt(v.startY)};${WriteCsv.writesOrientation(v.startOrientation)};${WriteCsv.writesInt(v.finalX)};${WriteCsv.writesInt(v.finalY)};${WriteCsv.writesOrientation(v.finalOrientation)};${WriteCsv.writesActions(v.actions)}\n"
+    s"${writesInt(v.startX)};${writesInt(v.startY)};${writesOrientation(v.startOrientation)};${writesInt(v.finalX)};${writesInt(v.finalY)};${writesOrientation(v.finalOrientation)};${writesActions(v.actions)}\n"
 
   implicit val writesLawnmowers: WritesCSV[List[Lawnmower]] = {
     case currentLawnmower :: othersLawnmowers =>
-      writesLawnmowers(othersLawnmowers) + writesLawnmower(currentLawnmower)
-    case Nil =>
-      "\n"
+      writesLawnmower(currentLawnmower) + writesLawnmowers(othersLawnmowers)
+    case Nil => "\n"
   }
 
-
-
   implicit val writesResult: WritesCSV[Result] = (v: Result) => s"numéro;début_x;début_y;début_direction;fin_x;fin_y;fin_direction;instructions" +
-    s"\n${WriteCsv.writesLawnmowers(v.lawnmowers)}"
-  def writeOf[A](implicit w: WritesCSV[A]): WritesCSV[A] = w
+    s"\n\n${writesLawnmowers(v.lawnmowers)}"
 }
 
 

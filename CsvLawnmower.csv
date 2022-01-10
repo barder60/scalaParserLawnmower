@@ -1,0 +1,6 @@
+numéro;début_x;début_y;début_direction;fin_x;fin_y;fin_direction;instructions
+
+1;2;E;2;1;E;AGAD
+3;4;N;4;5;E;ADA
+3;4;N;4;5;E;ADA
+
