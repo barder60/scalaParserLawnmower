@@ -1,14 +1,14 @@
 package progfun
 
 import play.api.libs.json.{JsObject, Writes}
-import exceptions.WrongUserInput
+import exceptions.DonneesIncorectesException
 import progfun.Action.Action
 
 case class Result(board: Board, lawnmowers: List[Lawnmower]) {
   def perform(
                newLawnmowers: List[Lawnmower],
                lawnmowers: List[Lawnmower]
-             ): Either[WrongUserInput, Result] =
+             ): Either[DonneesIncorectesException, Result] =
     lawnmowers match {
       case first :: rest =>
         moveLawnmower(first, first.actions) match {
@@ -26,10 +26,10 @@ case class Result(board: Board, lawnmowers: List[Lawnmower]) {
   def moveLawnmower(
                      lawnmower: Lawnmower,
                      actions: List[Action]
-                   ): Either[WrongUserInput, Lawnmower] = {
+                   ): Either[DonneesIncorectesException, Lawnmower] = {
     if (lawnmower.finalX > this.board.limitX || lawnmower.finalY > this.board.limitY) {
       Left(
-        WrongUserInput("Lawnmower hit board limit ".concat(lawnmower.toString))
+        DonneesIncorectesException("Lawnmower hit board limit ".concat(lawnmower.toString))
       )
     } else {
       actions match {

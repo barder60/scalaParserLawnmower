@@ -1,6 +1,6 @@
 package progfun
 
-import exceptions.WrongUserInput
+import exceptions.DonneesIncorectesException
 
 object Orientation extends Enumeration {
   type Orientation = Value
@@ -23,11 +23,11 @@ object Orientation extends Enumeration {
     case _ => orientation
   }
 
-  def map(c: String): Either[WrongUserInput, Orientation] = c match {
+  def map(c: String): Either[DonneesIncorectesException, Orientation] = c match {
     case "E" => Right(E)
     case "S" => Right(S)
     case "W" => Right(W)
     case "N" => Right(N)
-    case _ => Left(WrongUserInput("Wrong orientation : ".concat(c)))
+    case _ => Left(DonneesIncorectesException("Wrong orientation : ".concat(c)))
   }
 }

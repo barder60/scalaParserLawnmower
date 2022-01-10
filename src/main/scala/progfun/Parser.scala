@@ -1,11 +1,11 @@
 package progfun
 
-import exceptions.WrongUserInput
+import exceptions.DonneesIncorectesException
 import progfun.Action.Action
 
 class Parser(string: String) {
 
-  def parseString(): Either[WrongUserInput, Result] = {
+  def parseString(): Either[DonneesIncorectesException, Result] = {
     val elements: List[String] = this.string.split(';').map(_.trim).toList
 
     for {
@@ -15,14 +15,14 @@ class Parser(string: String) {
   }
 
   def parseLawnmowers(
-      board: Board,
-      lawnmowerElements: List[String],
-      lawnmowers: List[Lawnmower]
-  ): Either[WrongUserInput, List[Lawnmower]] = {
+                       board: Board,
+                       lawnmowerElements: List[String],
+                       lawnmowers: List[Lawnmower]
+                     ): Either[DonneesIncorectesException, List[Lawnmower]] = {
     if (lawnmowerElements.isEmpty) {
       Right(lawnmowers.reverse)
     } else if (lawnmowerElements.length % 2 != 0) {
-      Left(WrongUserInput("Wrong lawnmowers parameter number"))
+      Left(DonneesIncorectesException("Wrong lawnmowers parameter number"))
     } else {
       createLawnmower(
         lawnmowers.length + 1,
@@ -32,7 +32,7 @@ class Parser(string: String) {
         case Right(newLawnmower: Lawnmower) =>
           if (newLawnmower.startX > board.limitX || newLawnmower.startY > board.limitY) {
             Left(
-              WrongUserInput(
+              DonneesIncorectesException(
                 "Lawnmower with positions ("
                   .concat(newLawnmower.startX.toString)
                   .concat(",")
@@ -70,15 +70,15 @@ class Parser(string: String) {
                        lawnmoerId: Int,
                        positions: String,
                        actionsString: String
-                     ): Either[WrongUserInput, Lawnmower] = {
+                     ): Either[DonneesIncorectesException, Lawnmower] = {
     val initPositions = positions.split(',').map(_.trim).toList
     if (initPositions.length != 3) {
-      Left(WrongUserInput("Wrong lawnmowers position / orientation"))
+      Left(DonneesIncorectesException("Wrong lawnmowers position / orientation"))
     } else {
       if (!(initPositions(0) forall Character.isDigit)) {
-        Left(WrongUserInput("Wrong position : ".concat(initPositions(0))))
+        Left(DonneesIncorectesException("Wrong position : ".concat(initPositions(0))))
       } else if (!(initPositions(1) forall Character.isDigit)) {
-        Left(WrongUserInput("Wrong position : ".concat(initPositions(1))))
+        Left(DonneesIncorectesException("Wrong position : ".concat(initPositions(1))))
       } else {
         val startX = initPositions(0).toInt
         val startY = initPositions(1).toInt
@@ -101,9 +101,9 @@ class Parser(string: String) {
   }
 
   def createActions(
-      actionsString: String,
-      actions: List[Action]
-  ): Either[WrongUserInput, List[Action]] = {
+                     actionsString: String,
+                     actions: List[Action]
+                   ): Either[DonneesIncorectesException, List[Action]] = {
     if (actionsString.nonEmpty) {
       Action.mapToAction(actionsString.head) match {
         case Right(newAction: Action) =>
@@ -128,12 +128,12 @@ class Parser(string: String) {
 
   }
 
-  def parseBoard(boardElements: String): Either[WrongUserInput, Board] = {
+  def parseBoard(boardElements: String): Either[DonneesIncorectesException, Board] = {
     val elements: List[String] = boardElements.split(',').map(_.trim).toList
     if (elements.length != 2
-        || !(elements(0) forall Character.isDigit)
-        || !(elements(1) forall Character.isDigit)) {
-      Left(WrongUserInput("Wrong board parameter"))
+      || !(elements(0) forall Character.isDigit)
+      || !(elements(1) forall Character.isDigit)) {
+      Left(DonneesIncorectesException("Wrong board parameter"))
     } else {
       val limitX = elements(0).toInt
       val limitY = elements(1).toInt

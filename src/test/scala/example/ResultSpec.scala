@@ -1,6 +1,6 @@
 package example
 
-import exceptions.WrongUserInput
+import exceptions.DonneesIncorectesException
 import org.scalatest.funsuite.AnyFunSuite
 import progfun._
 
@@ -16,7 +16,7 @@ class ResultSpec extends AnyFunSuite {
       result <- initialResult
     } yield assert(
       result.perform(List(), result.lawnmowers) === Left(
-        WrongUserInput(
+        DonneesIncorectesException(
           "Lawnmower hit board limit Lawnmower(1,4,1,E,E,6,1,List(A, A, G))"
         )
       )
