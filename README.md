@@ -1,4 +1,24 @@
 # Projet AL
+## Auteur: Lucas Pothier, Jeremy Ternisien 5 AL 2
+
+### Ecrire dans le fichier application.conf modifier "input-file" (voir les commentaires)
+Structure du code demandé :
+``
+Board;Tondeuse;ActionTondeuse;Tondeuse;ActionTondeuse; etc...
+``
+
+Plus visuellement sous forme de valeur par valeur :
+``
+Board.limitX;Board.startY;Lawnmower.startOrientation;Lawnmower.finalX;Lawnmower.finalY)};Lawnmower.finalOrientation;Lawnmower.actions
+``
+
+Donc un input possible serait ceci : 
+``
+"7,7;1,2,E;DAGA;3,4,N;ADA;3,4,N;ADA;"
+``
+
+
+## Sujet du Projet : 
 
 ## Pré-requis
 
@@ -87,20 +107,6 @@ class HelloSpec extends AnyFunSuite {
 ```
 
 Le test sera lancé dès lorsqu'on lancera la commande `test`:
-
-```scala
-sbt:funprog-AL> test
-[info] Formatting 1 Scala sources...
-[info] compiling 1 Scala source to ../projet/funprog-al/target/scala-2.13/test-classes ...
-[info] HelloSpec:
-[info] - The Hello object should say hello
-[info] Run completed in 251 milliseconds.
-[info] Total number of tests run: 1
-[info] Suites: completed 1, aborted 0
-[info] Tests: succeeded 1, failed 0, canceled 0, ignored 0, pending 0
-[info] All tests passed.
-[success] Total time: 1 s, completed 14 nov. 2021 à 14:46:48
-```
 
 Une classe de test d'exemple vous est fourni dans `./src/test/example/HelloSpec.scala`.
 
