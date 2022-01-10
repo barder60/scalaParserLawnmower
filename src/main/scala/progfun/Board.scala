@@ -2,6 +2,7 @@ package progfun
 
 import play.api.libs.json.{JsObject, Writes}
 
+
 case class Board(limitX: Int, limitY: Int)
 
 object Board {
@@ -14,3 +15,5 @@ object Board {
     )
   )
 }
+
+

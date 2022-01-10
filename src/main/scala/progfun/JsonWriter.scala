@@ -4,7 +4,6 @@ import play.api.libs.json.{JsFalse, JsNumber, JsString, JsTrue, JsValue}
 import progfun.Orientation.Orientation
 
 case class JsonWriter() {
-
   trait Writes[A] {
     def writes(v: A): JsValue
   }
