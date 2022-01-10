@@ -23,7 +23,7 @@ case object WriteCsv {
   }
 
   implicit val writesLawnmower: WritesCSV[Lawnmower] = (v: Lawnmower) =>
-    s"${writesInt(v.startX)};${writesInt(v.startY)};${writesOrientation(v.startOrientation)};${writesInt(v.finalX)};${writesInt(v.finalY)};${writesOrientation(v.finalOrientation)};${writesActions(v.actions)}\n"
+    s"${writesInt(v.id)};${writesInt(v.startX)};${writesInt(v.startY)};${writesOrientation(v.startOrientation)};${writesInt(v.finalX)};${writesInt(v.finalY)};${writesOrientation(v.finalOrientation)};${writesActions(v.actions)}\n"
 
   implicit val writesLawnmowers: WritesCSV[List[Lawnmower]] = {
     case currentLawnmower :: othersLawnmowers =>

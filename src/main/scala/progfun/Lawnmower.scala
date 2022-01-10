@@ -3,9 +3,10 @@ package progfun
 import play.api.libs.json.{JsObject, Writes}
 
 import progfun.Action.{A, Action, D, G}
-import progfun.Orientation.{left, right, Orientation, E, N, S, W}
+import progfun.Orientation.{left, right, E, N, Orientation, S, W}
 
 case class Lawnmower(
+                      id: Int,
                       startX: Int,
                       startY: Int,
                       startOrientation: Orientation,
@@ -16,6 +17,7 @@ case class Lawnmower(
                     ) {
   def turnRight(): Lawnmower = {
     Lawnmower(
+      this.id,
       this.startX,
       this.startY,
       this.startOrientation,
@@ -28,6 +30,7 @@ case class Lawnmower(
 
   def turnLeft(): Lawnmower = {
     Lawnmower(
+      this.id,
       this.startX,
       this.startY,
       this.startOrientation,
@@ -41,6 +44,7 @@ case class Lawnmower(
   def moveForward(): Lawnmower = this.finalOrientation match {
     case N =>
       Lawnmower(
+        this.id,
         this.startX,
         this.startY,
         this.startOrientation,
@@ -51,6 +55,7 @@ case class Lawnmower(
       )
     case S =>
       Lawnmower(
+        this.id,
         this.startX,
         this.startY,
         this.startOrientation,
@@ -61,6 +66,7 @@ case class Lawnmower(
       )
     case E =>
       Lawnmower(
+        this.id,
         this.startX,
         this.startY,
         this.startOrientation,
@@ -71,6 +77,7 @@ case class Lawnmower(
       )
     case W =>
       Lawnmower(
+        this.id,
         this.startX,
         this.startY,
         this.startOrientation,
@@ -81,6 +88,7 @@ case class Lawnmower(
       )
     case _ =>
       Lawnmower(
+        this.id,
         this.startX,
         this.startY,
         this.startOrientation,

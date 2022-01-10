@@ -111,6 +111,7 @@ class ParserSpec extends AnyFunSuite {
     val board = Board(7, 7)
     val l1 = Lawnmower(
       1,
+      1,
       2,
       Orientation.E,
       Orientation.E,
@@ -119,6 +120,7 @@ class ParserSpec extends AnyFunSuite {
       List(Action.D, Action.A, Action.G, Action.A)
     )
     val l2 = Lawnmower(
+      2,
       3,
       4,
       Orientation.N,
@@ -128,6 +130,7 @@ class ParserSpec extends AnyFunSuite {
       List(Action.A, Action.D, Action.A)
     )
     val l3 = Lawnmower(
+      3,
       3,
       4,
       Orientation.N,
@@ -202,6 +205,7 @@ class ParserSpec extends AnyFunSuite {
     val board = Board(7, 7)
     val l1 = Lawnmower(
       1,
+      1,
       2,
       Orientation.E,
       Orientation.E,
@@ -210,6 +214,7 @@ class ParserSpec extends AnyFunSuite {
       List(Action.D, Action.A, Action.G, Action.A)
     )
     val l2 = Lawnmower(
+      2,
       3,
       4,
       Orientation.N,
@@ -219,6 +224,7 @@ class ParserSpec extends AnyFunSuite {
       List(Action.A, Action.D, Action.A)
     )
     val l3 = Lawnmower(
+      3,
       3,
       4,
       Orientation.N,

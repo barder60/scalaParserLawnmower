@@ -24,7 +24,11 @@ class Parser(string: String) {
     } else if (lawnmowerElements.length % 2 != 0) {
       Left(WrongUserInput("Wrong lawnmowers parameter number"))
     } else {
-      createLawnmower(lawnmowerElements(0), lawnmowerElements(1)) match {
+      createLawnmower(
+        lawnmowers.length + 1,
+        lawnmowerElements(0),
+        lawnmowerElements(1)
+      ) match {
         case Right(newLawnmower: Lawnmower) =>
           if (newLawnmower.startX > board.limitX || newLawnmower.startY > board.limitY) {
             Left(
@@ -63,9 +67,10 @@ class Parser(string: String) {
   }
 
   def createLawnmower(
-      positions: String,
-      actionsString: String
-  ): Either[WrongUserInput, Lawnmower] = {
+                       lawnmoerId: Int,
+                       positions: String,
+                       actionsString: String
+                     ): Either[WrongUserInput, Lawnmower] = {
     val initPositions = positions.split(',').map(_.trim).toList
     if (initPositions.length != 3) {
       Left(WrongUserInput("Wrong lawnmowers position / orientation"))
@@ -81,6 +86,7 @@ class Parser(string: String) {
           startOrientation <- Orientation.map(initPositions(2))
           actions <- createActions(actionsString, List())
         } yield Lawnmower(
+          lawnmoerId,
           startX,
           startY,
           startOrientation,

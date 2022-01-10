@@ -17,7 +17,7 @@ class ResultSpec extends AnyFunSuite {
     } yield assert(
       result.perform(List(), result.lawnmowers) === Left(
         WrongUserInput(
-          "Lawnmower hit board limit Lawnmower(4,1,E,E,6,1,List(A, A, G))"
+          "Lawnmower hit board limit Lawnmower(1,4,1,E,E,6,1,List(A, A, G))"
         )
       )
     )
@@ -28,6 +28,7 @@ class ResultSpec extends AnyFunSuite {
   ) {
     val board = Board(7, 7)
     val l1 = Lawnmower(
+      1,
       4,
       1,
       Orientation.E,
@@ -37,6 +38,7 @@ class ResultSpec extends AnyFunSuite {
       List(Action.A, Action.A, Action.G)
     )
     val l2 = Lawnmower(
+      2,
       3,
       4,
       Orientation.N,
@@ -46,6 +48,7 @@ class ResultSpec extends AnyFunSuite {
       List(Action.A, Action.D, Action.A)
     )
     val l3 = Lawnmower(
+      3,
       3,
       4,
       Orientation.N,
