@@ -9,7 +9,7 @@ Board;Tondeuse;ActionTondeuse;Tondeuse;ActionTondeuse; etc...
 
 Plus visuellement sous forme de valeur par valeur :
 ``
-Board.limitX;Board.startY;Lawnmower.startOrientation;Lawnmower.finalX;Lawnmower.finalY)};Lawnmower.finalOrientation;Lawnmower.actions
+Board.limitX;Board.startY;Lawnmower.startOrientation;Lawnmower.finalX;Lawnmower.finalY;Lawnmower.finalOrientation;Lawnmower.actions
 ``
 
 Donc un input possible serait ceci : 
