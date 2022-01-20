@@ -94,7 +94,7 @@ class WriterSpec extends AnyFunSuite {
     assert(
       resultCsv
         ===
-        "numéro;début_x;début_y;début_direction;fin_x;fin_y;fin_direction;instructions\n\n1;1;2;E;2;1;E;AGAD\n2;3;4;N;4;5;E;ADA\n3;3;4;N;4;5;E;ADA\n\n"
+        "numéro;début_x;début_y;début_direction;fin_x;fin_y;fin_direction;instructions\n1;1;2;E;2;1;E;AGAD\n2;3;4;N;4;5;E;ADA\n3;3;4;N;4;5;E;ADA\n\n"
     )
 
   }
