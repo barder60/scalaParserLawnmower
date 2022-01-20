@@ -1,8 +1,12 @@
 package progfun
 
 import com.typesafe.config.{Config, ConfigFactory}
+
 import java.io.PrintWriter
 import play.api.libs.json.Writes
+import progfun.model.Result
+import progfun.parser.Parser
+import progfun.writer.WriteCsv
 
 object Main extends App {
   val conf: Config = ConfigFactory.load()

@@ -1,8 +1,9 @@
-package example
+package example.model
 
 import exceptions.WrongUserInput
 import org.scalatest.funsuite.AnyFunSuite
-import progfun._
+import progfun.model._
+import progfun.parser.Parser
 
 class ResultSpec extends AnyFunSuite {
 

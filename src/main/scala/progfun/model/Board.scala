@@ -1,4 +1,4 @@
-package progfun
+package progfun.model
 
 import play.api.libs.json.{JsObject, Writes}
 

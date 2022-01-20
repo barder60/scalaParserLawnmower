@@ -1,7 +1,8 @@
-package progfun
+package progfun.parser
 
 import exceptions.WrongUserInput
-import progfun.Action.Action
+import progfun.model.Action.Action
+import progfun.model.{Action, Board, Lawnmower, Orientation, Result}
 
 class Parser(string: String) {
 

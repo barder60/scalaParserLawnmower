@@ -1,9 +1,8 @@
-package progfun
+package progfun.model
 
 import play.api.libs.json.{JsObject, Writes}
-
-import progfun.Action.{A, Action, D, G}
-import progfun.Orientation.{left, right, E, N, Orientation, S, W}
+import progfun.model.Action.{A, Action, D, G}
+import Orientation.{E, N, Orientation, S, W, left, right}
 
 case class Lawnmower(
                       id: Int,

@@ -1,7 +1,8 @@
-package progfun
+package progfun.writer
 
-import progfun.Action.Action
-import progfun.Orientation.Orientation
+import progfun.model.Action.Action
+import progfun.model.Orientation.Orientation
+import progfun.model.{Lawnmower, Result}
 
 trait WritesCSV[A] {
   def apply(t: A): String

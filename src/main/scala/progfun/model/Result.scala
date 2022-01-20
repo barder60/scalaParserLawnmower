@@ -1,8 +1,8 @@
-package progfun
+package progfun.model
 
-import play.api.libs.json.{JsObject, Writes}
 import exceptions.WrongUserInput
-import progfun.Action.Action
+import play.api.libs.json.{JsObject, Writes}
+import progfun.model.Action.Action
 
 case class Result(board: Board, lawnmowers: List[Lawnmower]) {
   def perform(

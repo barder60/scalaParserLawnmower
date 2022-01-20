@@ -1,7 +1,7 @@
-package progfun
+package progfun.writer
 
-import play.api.libs.json.{JsFalse, JsNumber, JsString, JsTrue, JsValue}
-import progfun.Orientation.Orientation
+import play.api.libs.json._
+import progfun.model.Orientation.Orientation
 
 case class JsonWriter() {
   trait Writes[A] {

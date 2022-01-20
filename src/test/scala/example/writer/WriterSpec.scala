@@ -1,8 +1,9 @@
-package example
+package example.writer
 
 import org.scalatest.funsuite.AnyFunSuite
 import play.api.libs.json.Writes
-import progfun._
+import progfun.model._
+import progfun.writer.WriteCsv
 
 class WriterSpec extends AnyFunSuite {
 
