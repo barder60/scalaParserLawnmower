@@ -33,7 +33,7 @@ case object WriteCsv {
   }
 
   implicit val writesResult: WritesCSV[Result] = (v: Result) => s"numéro;début_x;début_y;début_direction;fin_x;fin_y;fin_direction;instructions" +
-    s"\n\n${writesLawnmowers(v.lawnmowers)}"
+    s"\n${writesLawnmowers(v.lawnmowers)}"
 }
 
 
